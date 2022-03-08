@@ -16,6 +16,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     {{ __('Category') }}
                 </a>
+                <a class="nav-link collapsed" href="{{ route('posts') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    {{ __('Post') }}
+                </a>
         </div>
     </nav>
 </div>

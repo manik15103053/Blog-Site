@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -29,4 +30,9 @@ Route::prefix('categories')->group(function(){
     Route::get('edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
     Route::post('update/{id}',[CategoryController::class,'update'])->name('category.update');
     Route::get('delete/{id}',[CategoryController::class,'delete'])->name('category.delete');
+});
+Route::prefix('posts')->group(function(){
+    Route::get('/',[PostController::class,'index'])->name('posts');
+    Route::get('create',[PostController::class,'create'])->name('post.create');
+
 });
