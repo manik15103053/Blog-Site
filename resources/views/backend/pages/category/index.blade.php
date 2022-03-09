@@ -79,12 +79,12 @@
                         </div>
                         <div class="form-group">
                             <label for="image">{{ __('Image') }}</label>
-                            <input type="file" name="image" class="form-control" id="image" placeholder="{{ __('Choose Category Image') }}">
+                            <input type="file" name="image" class="form-control" id="image" placeholder="{{ __('Choose File') }}">
                             @if ($errors->has('image'))
                                 <div class="text-danger">
                                     {{ $errors->first('image') }}
                                 </div>
-                             @endif
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="description">{{ __('Description') }}</label>

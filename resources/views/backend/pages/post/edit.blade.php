@@ -13,11 +13,11 @@
             <div class="card">
                 <div class="card-body ">
                     <h4 class="header-title">{{ __('Create Post') }}</h4>
-                    <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('post.update',$post->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>
-                            <input type="text" name="title" class="form-control" id="title" placeholder="{{ __('Input The Title') }}">
+                            <input type="text" name="title" class="form-control" id="title" value="{{ $post->title }}" placeholder="{{ __('Input The Title') }}">
                             @if ($errors->has('title'))
                                 <div class="text-danger">
                                     {{ $errors->first('title') }}
@@ -27,7 +27,7 @@
 
                         <div class="form-group">
                             <label for="slug">{{ __('Slug') }}</label>
-                            <input type="text" name="slug" class="form-control" id="slug" placeholder="{{ __('Input The Slug') }}">
+                            <input type="text" name="slug" class="form-control" id="slug" value="{{ $post->slug }}" placeholder="{{ __('Input The Slug') }}">
                             @if ($errors->has('slug'))
                                 <div class="text-danger">
                                     {{ $errors->first('slug') }}
@@ -40,7 +40,11 @@
                             <select id="tags" name="tags[]" class="form-control select2" >
                                 <option value="">{{ __('Select Tag') }}</option>
                                 @foreach($tags as $tag)
-                                    <option value="{{ $tag->title }}">{{ $tag->title }}</option>
+                                    <option
+                                        @foreach ($post->tags as $postTag)
+                                        {{$postTag->id == $tag->id ? 'selected' : ''}}
+                                        @endforeach
+                                    value="{{ $tag->id }}" >{{ $tag->title }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -49,7 +53,11 @@
                             <select name="categories[]" id="categories" class="form-control select2" >
                                 <option value="">{{ __('Select Category') }}</option>
                                 @foreach ($categories as $category)
-                                    <option value="$category->id">{{ $category->title }}</option>
+                                    <option
+                                    @foreach ($post->categories as $postCategory)
+                                        {{ $postCategory->id == $category->id ? 'selected' : '' }}
+                                    @endforeach
+                                    value="$category->id">{{ $category->title }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('slug'))
@@ -59,7 +67,6 @@
                             @endif
                         </div>
                         </div>
-
                         <div class="form-group">
                             <label for="image">{{ __('Image') }}</label>
                             <input type="file" name="image" class="form-control" id="image" placeholder="{{ __('Choose File') }}">
@@ -70,12 +77,12 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <input type="checkbox"id="publish"class="filled-in"name="status"value="1">
+                            <input type="checkbox"id="publish"class="filled-in"name="status"value="1" {{ $post->status == true ? 'checked' : ''}}>
                             <label for="publish">Publish</label>
                         </div>
                         <div class="form-group">
-                            <label for="description">{{ __('Body') }}</label>
-                            <textarea name="" id="" cols="30" rows="3" class="form-control"></textarea>
+                            <label for="body">{{ __('Body') }}</label>
+                            <textarea name="body" id="body" cols="30" rows="3" class="form-control">{{ $post->body }}</textarea>
                         </div>
                         <button type="submit" class="btn btn-success float-right">{{ __('Save') }}</button>
                     </form>

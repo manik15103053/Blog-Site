@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Image;
 class CategoryController extends Controller
 {
     public function index(){
@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function store(Request $request){
         $this->validate($request,[
             'title' => 'required|max:65',
-            'slug'  => 'required|unique:tags,slug'
+            'slug'  => 'required|unique:tags,slug',
         ]);
         $category                = new Category();
         $category->title         = $request->title;

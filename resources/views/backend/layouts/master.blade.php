@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>@yield('title')</title>
        @include('backend.layouts.partial.styles')
-       @yield('css')
+       @yield('styles')
     </head>
     <body class="sb-nav-fixed">
         @include('backend.layouts.partial.navbar')

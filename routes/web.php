@@ -34,5 +34,9 @@ Route::prefix('categories')->group(function(){
 Route::prefix('posts')->group(function(){
     Route::get('/',[PostController::class,'index'])->name('posts');
     Route::get('create',[PostController::class,'create'])->name('post.create');
+    Route::post('store',[PostController::class,'store'])->name('post.store');
+    Route::get('edit/{id}',[PostController::class,'edit'])->name('post.edit');
+    Route::post('update/{id}',[PostController::class,'update'])->name('post.update');
+    Route::get('delete/{id}',[PostController::class,'delete'])->name('post.delete');
 
 });

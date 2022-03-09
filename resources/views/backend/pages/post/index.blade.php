@@ -27,6 +27,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">{{ __('Title') }}</th>
                                         <th scope="col">{{ __('Created By') }}</th>
+                                        <th scope="col">{{ __('View Count') }}</th>
                                         <th scope="col">{{ __('Status') }}</th>
                                         <th scope="col">{{ __('Is Approved') }}</th>
                                         <th scope="col">{{ __('Created At') }}</th>
@@ -37,15 +38,30 @@
                                     @foreach ($posts as $key=>$post)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $post->title }}</td>
-                                            <td>{{ $post->description }}</td>
+                                            <td>{{ Str::limit($post->title ,15) }}</td>
                                             <td></td>
+                                            <td>{{ $post->view_count }}</td>
+                                            <td>
+                                                @if ($post->status == true)
+                                                    <span class="btn btn-success btn-sm">{{ __('Publish') }}</span>
+                                                @else
+                                                    <span class="btn btn-warning btn-sm">{{ __('Pending') }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($post->is_approved == true)
+                                                    <span class="btn btn-primary btn-sm">{{ __('Approved') }}</span>
+                                                @else
+                                                    <span class="btn btn-danger btn-sm">{{ __('Pending') }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $post->created_at }}</td>
                                             <td>
                                                 <a href="{{ route('post.edit',$post->id) }}" class="btn btn-success btn-sm">
-                                                    <i class="fa fa-edit "></i>
+                                                    <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a href="{{ route('post.delete',$post->id) }}" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash "></i>
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
