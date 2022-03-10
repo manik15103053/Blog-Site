@@ -4,7 +4,8 @@
     {{ __('Create Post') }}
 @endsection
 @section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="{{ asset('admin/backend/css/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('admin/backend/css/summernote.min.css') }}" rel="stylesheet" />
 @endsection
 @section('main-content')
 <div class="container">
@@ -37,7 +38,7 @@
                         <div class="row">
                          <div class="form-group col-md-6">
                             <label for="slug">{{ __('Tag') }}</label>
-                            <select id="tags" name="tags[]" class="form-control select2" >
+                            <select id="tags" name="tags[]" class="form-control select2" multiple="multiple">
                                 <option value="">{{ __('Select Tag') }}</option>
                                 @foreach($tags as $tag)
                                     <option
@@ -50,14 +51,14 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="slug">{{ __('Category') }}</label>
-                            <select name="categories[]" id="categories" class="form-control select2" >
+                            <select name="categories[]" id="categories" class="form-control select2" multiple="multiple">
                                 <option value="">{{ __('Select Category') }}</option>
                                 @foreach ($categories as $category)
                                     <option
                                     @foreach ($post->categories as $postCategory)
                                         {{ $postCategory->id == $category->id ? 'selected' : '' }}
                                     @endforeach
-                                    value="$category->id">{{ $category->title }}</option>
+                                    value="{{ $category->id }}">{{ $category->title }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('slug'))
@@ -82,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label for="body">{{ __('Body') }}</label>
-                            <textarea name="body" id="body" cols="30" rows="3" class="form-control">{{ $post->body }}</textarea>
+                            <textarea id="summernote" name="body"></textarea>
                         </div>
                         <button type="submit" class="btn btn-success float-right">{{ __('Save') }}</button>
                     </form>
@@ -93,10 +94,15 @@
 </div>
 @endsection
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ asset('admin/backend/js/select2.min.js') }}"></script>
+<script src="{{ asset('admin/backend/js/summernote.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('.select2').select2();
         });
+    $(document).ready(function() {
+      $('#summernote').summernote();
+    });
     </script>
 @endsection

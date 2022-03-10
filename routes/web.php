@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\Authentication\RegistretionController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login',[LoginController::class,'loginForm'])->name('login');
+Route::get('/register',[RegistretionController::class,'register'])->name('registration.form');
+Route::post('admin-registration',[RegistretionController::class,'adminRegistration'])->name('admin.registraton');
+Route::post('login-store',[LoginController::class,'storeLogin'])->name('store.login');
+
 Route::get('/',[DashboardController::class,'index'])->name('dashboard');
 Route::prefix('tags')->group(function(){
     Route::get('/',[TagController::class,'index'])->name('tags');

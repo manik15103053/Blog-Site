@@ -22,11 +22,18 @@ class PostController extends Controller
         return view('backend.pages.post.create',compact('tags','categories'));
     }
     public function store(Request $request){
+
+        $tags = [];
+        $categories = [];
+
+        $tags = array_unique(array_merge($tags, $request->tags));
+        $categories = array_unique(array_merge($categories, $request->categories));
+        dd($tags);
         $this->validate($request,[
             'title'         => 'required|max:150',
             'slug'          => 'required|unique:posts,slug|max:65',
-            'tags'          => 'required',
-            'categories'    => 'required',
+            'tags'          => 'required|array',
+            'categories'    => 'required|array',
             'image'         => 'required'
         ]);
 
@@ -37,17 +44,13 @@ class PostController extends Controller
             Image::make($image)->save($location);
         }
 
-        $post = new Post();
-
-        // dd($post);
-        $post->title   = $request->title;
-        $post->slug    = Str::slug($request->title);
-        $post->image   = $img;
-        $post->body    = $request->body;
-        // $post->categories = $request['categories'];
-        // dd($post);
-        // $post->tag_id  = $request->tag_id;
-        // $post->category_id = $request->category_id;
+        $post               = new Post();
+        $post->title        = $request->title;
+        $post->slug         = Str::slug($request->title);
+        $post->image        = $img;
+        $post->body         = $request->body;
+        $post->categories   = $categories;
+        $post->tags         = $tags;
 
         if(isset($request->status)){
             $post->status = true;
@@ -56,14 +59,9 @@ class PostController extends Controller
         }
         $post->is_approved = true;
         $post->save();
-        $post= $request['tags'];
-        $post= $request['categories'];
-        // $post->categories()->attach($request->categories);
-        // $post->tags()->attach($request->tags);
         return redirect()->route('posts')->with(['msg' => 'Post Created Successfully']);
     }
     public function edit($id){
-
         $categories = Category::orderBy('id','desc')->get();
         $tags      = Tag::orderBy('id','desc')->get();
         $post     = Post::find($id);
@@ -71,11 +69,17 @@ class PostController extends Controller
     }
     public function update(Request $request , $id){
 
+        $tags = [];
+        $categories = [];
+
+        $tags = array_unique(array_merge($tags, $request->tags));
+        $categories = array_unique(array_merge($categories, $request->categories));
+
         $this->validate($request,[
             'title'         => 'required|max:150',
             'slug'          => 'required|unique:tags,slug,'.\Request()->id,
-            'tags'          => 'required',
-            'categories'    => 'required',
+            'tags'          => 'required|array',
+            'categories'    => 'required|array',
             'image'         => 'nullable'
         ]);
         if($request->hasFile('image')){
@@ -85,12 +89,12 @@ class PostController extends Controller
             Image::make($image)->save($location);
         }
         $post = Post::find($id);
-
-        // dd($post);
-        $post->title   = $request->title;
-        $post->slug    = Str::slug($request->title);
-        $post->image   = $request->img;
-        $post->body    = $request->body;
+        $post->title        = $request->title;
+        $post->slug         = Str::slug($request->title);
+        $post->image        = $request->img;
+        $post->body         = $request->body;
+        $post->categories   = $categories;
+        $post->tags         = $tags;
 
         if(isset($request->status)){
             $post->status = true;
@@ -99,8 +103,6 @@ class PostController extends Controller
         }
         $post->is_approved = true;
         $post->save();
-        $post= $request['tags'];
-        $post= $request['categories'];
         return redirect()->route('posts')->with(['msg' => 'Post Updated Successfully']);
     }
     public function delete($id){
