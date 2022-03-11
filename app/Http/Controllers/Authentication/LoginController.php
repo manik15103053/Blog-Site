@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class LoginController extends Controller
 {
+    public function __construct()
+{
+   $this->middleware('web');
+}
     public function loginForm(){
         return view('backend.auth.login');
     }
@@ -17,18 +21,12 @@ class LoginController extends Controller
             'email'    => 'required',
             'password' => 'required'
         ]);
-       if(Auth::guard('web')->attempt(['email'=>$request->email,'password'=> $request->password,$request->remember])){
-        $request->session()->regenerate();
-        if(auth()->user()->role_id == 1){
-            return redirect()->route('dashboard');
-        }elseif(auth()->user()->role_id == 2){
-            return redirect()->route('registration.form');
+        $check = $request->only('email','password');
+        if(Auth::guard('web')->attempt($check)){
+            return redirect()->route('dashboard')->with('success','Welcome to Dashboard');
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Login Falied');
         }
-       }else{
-        return redirect()->back()->with('msg','Your creditional is invalid');
-       }
 
     }
 }

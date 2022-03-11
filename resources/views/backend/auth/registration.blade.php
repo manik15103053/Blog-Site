@@ -60,11 +60,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="password_confirmation" name="password_confirmation" type="password" placeholder="{{ __('Confirm password') }}" autocomplete="new-password"/>
+                                        <input class="form-control" id="confirm_password" name="confirm_password" type="password" placeholder="{{ __('Confirm password') }}"/>
                                         <label for="inputPasswordConfirm">{{ __('Confirm Password') }}</label>
-                                        @if ($errors->has('password_confirmation'))
+                                        @if ($errors->has('confirm_password'))
                                             <div class="text-danger">
-                                                {{ $errors->first('password_confirmation') }}
+                                                {{ $errors->first('confirm_password') }}
                                             </div>
                                         @endif
                                     </div>
