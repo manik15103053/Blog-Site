@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body ">
                     <h4 class="header-title">{{ __('Edit Tag') }}</h4>
-                    <form action="{{ route('category.update',$category->id) }}" method="POST">
+                    <form action="{{ route('user.category.update',$category->id) }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>

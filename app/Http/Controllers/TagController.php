@@ -42,7 +42,7 @@ class TagController extends Controller
         $tag->slug          = Str::slug($request->title);
         $tag->description   = $request->description;
         $tag->save();
-        return redirect()->route('tags')->with(['msg' => 'Tag Updated Successfully.']);
+        return redirect()->route('user.tags')->with(['msg' => 'Tag Updated Successfully.']);
      }
      public function delete($id){
          Tag::find($id)->delete();

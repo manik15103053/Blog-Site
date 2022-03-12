@@ -13,7 +13,7 @@
                 <div class="card-body">
                     @include('backend.layouts.partial.success-message')
                     <h4 class="header-title">{{ __('All Post') }}
-                        <a href="{{ route('post.create') }}" class="btn btn-success btn-sm float-right">
+                        <a href="{{ route('user.post.create') }}" class="btn btn-success btn-sm float-right">
                             <span>{{ __('Create Post') }}</span>
                             <i class="fa fa-plus "></i>
 
@@ -57,10 +57,10 @@
                                             </td>
                                             <td>{{ $post->created_at }}</td>
                                             <td>
-                                                <a href="{{ route('post.edit',$post->id) }}" class="btn btn-success btn-sm">
+                                                <a href="{{ route('user.post.edit',$post->id) }}" class="btn btn-success btn-sm">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <a href="{{ route('post.delete',$post->id) }}" class="btn btn-danger btn-sm">
+                                                <a href="{{ route('user.post.delete',$post->id) }}" class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>

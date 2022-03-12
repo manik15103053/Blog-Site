@@ -21,9 +21,9 @@
                                 {{ Session::get('error') }}
                             </div>
                         @endif
-                        <h3 class="text-center font-weight-light my-4">User Login</h3></div>
+                        <h3 class="text-center font-weight-light my-4">Admin Login</h3></div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('user.store.login') }}">
+                        <form method="POST" action="{{ route('admin.store.login') }}">
                             @csrf
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="email" name="email" type="text" placeholder="{{ __('name@example.com') }}" />
@@ -52,9 +52,6 @@
                                 <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="card-footer text-center py-3">
-                        <div class="small"><a href="{{ route('user.registration.form') }}">Need an account? Sign up!</a></div>
                     </div>
                 </div>
             </div>

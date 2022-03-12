@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -42,7 +42,7 @@ class CategoryController extends Controller
         $category->slug          = Str::slug($request->title);
         $category->description   = $request->description;
         $category->save();
-        return redirect()->route('categories')->with(['msg' => 'Category Updated Successfully.']);
+        return redirect()->route('user.categories')->with(['msg' => 'Category Updated Successfully.']);
      }
      public function delete($id){
          Category::find($id)->delete();

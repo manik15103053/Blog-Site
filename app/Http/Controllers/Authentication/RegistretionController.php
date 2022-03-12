@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RegistretionController extends Controller
 {
@@ -29,7 +30,7 @@ class RegistretionController extends Controller
         $user->name     = $request->name;
         $user->username = $request->username;
         $user->email    = $request->email;
-        $user->password = bcrypt($request->pasword);
+        $user->password = Hash::make($request->pasword);
         $user->save();
         return redirect()->route('dashboard')->with(['mgs' => 'Registration Successfully']);
     }

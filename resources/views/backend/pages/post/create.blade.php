@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-body ">
                     <h4 class="header-title">{{ __('Create Post') }}</h4>
-                    <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('user.post.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>

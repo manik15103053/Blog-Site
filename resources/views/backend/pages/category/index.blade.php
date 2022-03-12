@@ -33,10 +33,10 @@
                                             <td>{{ $category->description }}</td>
                                             <td></td>
                                             <td>
-                                                <a href="{{ route('category.edit',$category->id) }}" class="btn btn-success btn-sm">
+                                                <a href="{{ route('user.category.edit',$category->id) }}" class="btn btn-success btn-sm">
                                                     <i class="fa fa-edit "></i>
                                                 </a>
-                                                <a href="{{ route('category.delete',$category->id) }}" class="btn btn-danger btn-sm">
+                                                <a href="{{ route('user.category.delete',$category->id) }}" class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash "></i>
                                                 </a>
                                             </td>
@@ -56,7 +56,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">{{ __('Add Category') }}</h4>
-                    <form action="{{ route('category.store') }}" method="POST">
+                    <form action="{{ route('user.category.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>

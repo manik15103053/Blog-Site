@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use App\Models\Post;
@@ -23,12 +23,12 @@ class PostController extends Controller
     }
     public function store(Request $request){
 
-        $tags = [];
-        $categories = [];
+        // $tags = [];
+        // $categories = [];
 
-        $tags = array_unique(array_merge($tags, $request->tags));
-        $categories = array_unique(array_merge($categories, $request->categories));
-        dd($tags);
+        // $tags = array_unique(array_merge($tags, $request->tags));
+        // $categories = array_unique(array_merge($categories, $request->categories));
+        // dd($tags);
         $this->validate($request,[
             'title'         => 'required|max:150',
             'slug'          => 'required|unique:posts,slug|max:65',
@@ -49,8 +49,8 @@ class PostController extends Controller
         $post->slug         = Str::slug($request->title);
         $post->image        = $img;
         $post->body         = $request->body;
-        $post->categories   = $categories;
-        $post->tags         = $tags;
+        // $post->categories   = $categories;
+        // $post->tags         = $tags;
 
         if(isset($request->status)){
             $post->status = true;
@@ -59,7 +59,12 @@ class PostController extends Controller
         }
         $post->is_approved = true;
         $post->save();
-        return redirect()->route('posts')->with(['msg' => 'Post Created Successfully']);
+
+        $post->categories()->attach($request->categories);
+        $post->tags()->attach($request->tags);
+
+
+        return redirect()->route('user.posts')->with(['msg' => 'Post Created Successfully']);
     }
     public function edit($id){
         $categories = Category::orderBy('id','desc')->get();
@@ -69,11 +74,7 @@ class PostController extends Controller
     }
     public function update(Request $request , $id){
 
-        $tags = [];
-        $categories = [];
 
-        $tags = array_unique(array_merge($tags, $request->tags));
-        $categories = array_unique(array_merge($categories, $request->categories));
 
         $this->validate($request,[
             'title'         => 'required|max:150',
@@ -93,8 +94,7 @@ class PostController extends Controller
         $post->slug         = Str::slug($request->title);
         $post->image        = $request->img;
         $post->body         = $request->body;
-        $post->categories   = $categories;
-        $post->tags         = $tags;
+
 
         if(isset($request->status)){
             $post->status = true;
@@ -103,7 +103,11 @@ class PostController extends Controller
         }
         $post->is_approved = true;
         $post->save();
-        return redirect()->route('posts')->with(['msg' => 'Post Updated Successfully']);
+
+        $post->categories()->sync($request->categories);
+        $post->tags()->sync($request->tags);
+
+        return redirect()->route('user.posts')->with(['msg' => 'Post Updated Successfully']);
     }
     public function delete($id){
         Post::find($id)->delete();

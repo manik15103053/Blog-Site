@@ -8,18 +8,21 @@
                     Dashboard
                 </a>
                 <div class="sb-sidenav-menu-heading">Interface</div>
-                <a class="nav-link collapsed" href="{{ route('tags') }}"">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                @if (Auth::guard('web')->check())
+                <a class="nav-link collapsed" href="{{ route('user.tags') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
                     {{ __('Tag') }}
                 </a>
-                <a class="nav-link collapsed" href="{{ route('categories') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                <a class="nav-link collapsed" href="{{ route('user.categories') }}">
+                    <div class="sb-nav-link-icon"><i class="fa fa-list-alt"></i></div>
                     {{ __('Category') }}
                 </a>
-                <a class="nav-link collapsed" href="{{ route('posts') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                <a class="nav-link collapsed" href="{{ route('user.posts') }}">
+                    <div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>
                     {{ __('Post') }}
                 </a>
+                @endif
+
         </div>
     </nav>
 </div>
