@@ -70,7 +70,8 @@
                         </div>
                         <div class="form-group">
                             <label for="image">{{ __('Image') }}</label>
-                            <input type="file" name="image" class="form-control" id="image" placeholder="{{ __('Choose File') }}">
+                            <input type="file" name="image" class="form-control"  id="image" placeholder="{{ __('Choose File') }}">
+                            <img src="{{ asset('images/post/'.$post->image) }}" width="70px" height="70px" alt="image">
                             @if ($errors->has('image'))
                                 <div class="text-danger">
                                     {{ $errors->first('image') }}

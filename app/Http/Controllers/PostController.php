@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Image;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Category;
@@ -9,7 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Image;
+use Illuminate\Support\Facades\File;
+
 class PostController extends Controller
 {
     public function index(){
@@ -45,6 +47,7 @@ class PostController extends Controller
         }
 
         $post               = new Post();
+        $post->user_id      = Auth::id();
         $post->title        = $request->title;
         $post->slug         = Str::slug($request->title);
         $post->image        = $img;
@@ -81,18 +84,12 @@ class PostController extends Controller
             'slug'          => 'required|unique:tags,slug,'.\Request()->id,
             'tags'          => 'required|array',
             'categories'    => 'required|array',
-            'image'         => 'nullable'
+
         ]);
-        if($request->hasFile('image')){
-            $image = $request->file('image');
-            $img = time().'.'.$image->getClientOriginalExtension();
-            $location = public_path('images/post/'.$img);
-            Image::make($image)->save($location);
-        }
-        $post = Post::find($id);
+        $post               = Post::find($id);
+        $post->user_id      = Auth::id();
         $post->title        = $request->title;
         $post->slug         = Str::slug($request->title);
-        $post->image        = $request->img;
         $post->body         = $request->body;
 
 
@@ -102,6 +99,18 @@ class PostController extends Controller
             $post->status = false;
         }
         $post->is_approved = true;
+
+        if($request->hasFile('image')){
+            $imgDelete = 'images/post/'.$post->image;
+            if(File::exists($imgDelete)){
+                File::delete($imgDelete);
+            }
+            $image = $request->file('image');
+            $img = time().'.'.$image->getClientOriginalExtension();
+            $location = public_path('images/post/'.$img);
+            Image::make($image)->save($location);
+            $post->image = $img;
+        }
         $post->save();
 
         $post->categories()->sync($request->categories);

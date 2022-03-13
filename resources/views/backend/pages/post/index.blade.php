@@ -39,7 +39,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ Str::limit($post->title ,15) }}</td>
-                                            <td></td>
+                                            <td>{{ $post->user->name }}</td>
                                             <td>{{ $post->view_count }}</td>
                                             <td>
                                                 @if ($post->status == true)
@@ -57,6 +57,9 @@
                                             </td>
                                             <td>{{ $post->created_at }}</td>
                                             <td>
+                                                <a href="{{ route('frontend.home') }}" class="btn btn-info btn-sm">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
                                                 <a href="{{ route('user.post.edit',$post->id) }}" class="btn btn-success btn-sm">
                                                     <i class="fa fa-edit"></i>
                                                 </a>

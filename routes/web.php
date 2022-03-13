@@ -7,6 +7,7 @@ use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegistretionController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Frontend\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/',[FrontendController::class,'index'])->name('frontend.home');
 Route::prefix('user')->name('user.')->group(function(){
     Route::middleware('guest:web')->group(function(){
         Route::get('/login',[LoginController::class,'loginForm'])->name('login');

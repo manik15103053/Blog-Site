@@ -8,7 +8,7 @@ use Auth;
 
 class LoginController extends Controller
 {
-   
+
     public function loginForm(){
         return view('backend.auth.login');
     }
@@ -28,6 +28,6 @@ class LoginController extends Controller
     }
     public function logout(){
         Auth::guard('web')->logout();
-        return redirect()->route('user.login');
+        return redirect()->route('frontend.home');
     }
 }

@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body ">
                     <h4 class="header-title">{{ __('Edit Tag') }}</h4>
-                    <form action="{{ route('user.category.update',$category->id) }}" method="POST">
+                    <form action="{{ route('user.category.update',$category->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>
@@ -34,7 +34,8 @@
                         </div>
                         <div class="form-group">
                             <label for="image">{{ __('Image') }}</label>
-                            <input type="file" name="image" value="{{ $category->image }}" class="form-control" id="image" placeholder="{{ __('Input The Slug') }}">
+                            <input type="file" name="image" class="form-control" id="image" placeholder="{{ __('Input The Slug') }}">
+                            <img src="{{ asset('images/category/'.$category->image) }}" width="70px" height="70px" alt="image">
                             @if ($errors->has('image'))
                                 <div class="text-danger">
                                     {{ $errors->first('image') }}
